@@ -303,11 +303,15 @@
     <div class="privacy-inner">
       <p class="section-eyebrow">Privacy</p>
       <hr class="divider" />
+      <p class="report-text">
+        The short version: everything happens inside your browser, on your own device.
+        There is no server-side code that receives, stores, or logs your data.
+      </p>
       <ul class="privacy-list">
-        <li>Password analysis happens entirely in your browser. Nothing is uploaded.</li>
-        <li>Your password is never stored not in memory beyond the session, not in a database, not anywhere.</li>
+        <li><strong>What data is handled:</strong> only the password you type into the analyzer, processed in browser memory to compute a score; and, for the breach check, a partial SHA-1 hash prefix sent to Have I Been Pwned. Nothing else is collected.</li>
+        <li><strong>Everything is client-side:</strong> the full password never leaves the page, never goes to a server, and is cleared when you refresh or close the tab.</li>
+        <li><strong>Storage used:</strong> none. The page sets no cookies and uses no localStorage, sessionStorage, or IndexedDB, so there is no consent banner to show.</li>
         <li>The breach check uses a k-anonymity approach: only a partial hash prefix is sent to Have I Been Pwned.</li>
-        <li>The full password is never sent to HIBP, or to any server.</li>
         <li>Passwords are never written to the URL, localStorage, sessionStorage, analytics, or console logs.</li>
         <li>Do not enter a password belonging to another person without their authorization.</li>
       </ul>
@@ -332,9 +336,10 @@
         <p class="credit-name">Namish Yadav</p>
         <p class="credit-role">Main Author / Lead Developer</p>
         <div class="credit-links">
-          <a href="https://github.com/namish-yadav" target="_blank" rel="noopener noreferrer">GitHub · @namish-yadav</a>
-          <a href="https://instagram.com/nam7sh" target="_blank" rel="noopener noreferrer">Instagram · @nam7sh</a>
-          <a href="https://www.linkedin.com/in/namish-yadav-639769408/" target="_blank" rel="noopener noreferrer">LinkedIn · Namish Yadav</a>
+          <a href="https://github.com/p3xz" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/namish-yadav-639769408" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://instagram.com/nam7sh" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://namishhh.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
         </div>
       </div>
 
@@ -374,7 +379,13 @@
       <a href="#privacy">Privacy</a>
       <a href="#credits">Credits</a>
     </nav>
-    <p class="footer-note">A first-year cybersecurity portfolio project.</p>
+    <nav class="footer-socials" aria-label="Social">
+      <a href="https://github.com/p3xz" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://linkedin.com/in/namish-yadav-639769408" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://instagram.com/nam7sh" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://namishhh.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
+    </nav>
+    <p class="footer-note">Made by Namish. A first-year cybersecurity portfolio project.</p>
   </div>
 </footer>
 
