@@ -1,6 +1,10 @@
 # Infernified
 
-**Privacy-conscious Password Security Analyzer**
+> A privacy-conscious, client-side password security analyzer that evaluates password strength and breach exposure entirely in the browser, so your password never leaves your device.
+
+![Status](https://img.shields.io/badge/status-active-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue)
+
+## About
 
 Infernified is a client-side password security analyzer designed to help users understand the characteristics and potential exposure of a password.
 
@@ -8,148 +12,46 @@ It evaluates password length, character composition, common patterns, approximat
 
 The optional breach check uses the **Have I Been Pwned Pwned Passwords API** with its k-anonymity range lookup. The password is hashed locally, and only a five-character prefix of the SHA-1 hash is sent to the API. The returned hash suffixes are compared locally in the browser.
 
-## Why
+### Why
 
 Most online password checkers ask you to send your password to a server for analysis. Infernified was built to do the opposite: analyze the password entirely in the browser, so the password itself never leaves your device. It is a personal project built to learn practical browser cryptography and privacy-focused design.
 
-## When
+### When
 
 September 2026.
 
----
-
 ## Features
 
-### Local Password Analysis
+- **Local Password Analysis**: analyzes password length, uppercase and lowercase characters, numbers, symbols, repeated characters, sequential patterns, keyboard-style patterns, and common password matches. Requires no internet connection.
+- **Approximate Entropy**: entropy estimate based on password length and the estimated character pool, intended as an educational indicator rather than a guarantee of strength.
+- **Security Score**: converts password characteristics into a heuristic score from 0-100 with classifications (Very Weak, Weak, Moderate, Strong, Very Strong).
+- **Breach Exposure Check**: optional lookup against the Have I Been Pwned Pwned Passwords API using k-anonymity. Only the first five characters of the locally generated SHA-1 hash leave the browser.
+- **Password Generator**: configurable generator supporting uppercase letters, lowercase letters, numbers, symbols, and custom length. Uses the browser's `crypto.getRandomValues()` API rather than `Math.random()` for security-sensitive randomness. Generated passwords are not stored.
+- **Accessibility**: semantic HTML, keyboard navigation, visible focus states, responsive layouts, and reduced-motion support.
+- **Responsive Design**: CSS Grid and responsive CSS adapt the interface between desktop and mobile layouts.
 
-The application analyzes a password locally for:
+## Tech Stack
 
-* Password length
-* Uppercase characters
-* Lowercase characters
-* Numbers
-* Symbols
-* Repeated characters
-* Sequential patterns
-* Keyboard-style patterns
-* Common password matches
+![HTML](https://skillicons.dev/icons?i=html) ![CSS](https://skillicons.dev/icons?i=css) ![JavaScript](https://skillicons.dev/icons?i=js)
 
-The local analysis does not require an internet connection.
+* **HTML5**: page structure and semantic markup.
+* **CSS3**: responsive layout, CSS Grid, custom properties, animations, and styling.
+* **Vanilla JavaScript (ES2017+)**: application logic and DOM interaction. No framework was needed because the app is a single static page with no build step, so plain JavaScript keeps everything dependency-free and fast to load.
+* **Web Crypto API**: SHA-1 hashing for the breach check and `crypto.getRandomValues()` for secure random number generation in the password generator, replacing `Math.random()` for security-sensitive randomness.
+* **Fetch API**: asynchronous communication with the HIBP breach-check endpoint.
+* **Have I Been Pwned Pwned Passwords API**: breach exposure lookup. Its k-anonymity model, where only a five-character hash prefix leaves the browser, matches the app's privacy goal.
+* **Inter**: interface typography.
+* **IBM Plex Mono**: monospace technical typography.
 
-### Approximate Entropy
+There is:
 
-Infernified provides an approximate entropy estimate based on password length and the estimated character pool.
+* No frontend framework
+* No backend
+* No database
+* No build step
+* No external JavaScript framework dependencies
 
-This is intended as an educational indicator rather than a guarantee of password strength.
-
-### Security Score
-
-The analyzer converts several password characteristics into a score from **0–100** with classifications:
-
-* Very Weak
-* Weak
-* Moderate
-* Strong
-* Very Strong
-
-The score is a heuristic and should not be interpreted as a formal security assessment.
-
-### Breach Exposure Check
-
-The optional breach check uses the **Have I Been Pwned Pwned Passwords API**.
-
-The process is:
-
-```text
-Password
-   ↓
-SHA-1 hash generated locally
-   ↓
-First 5 characters of hash extracted
-   ↓
-5-character prefix sent to HIBP
-   ↓
-Matching hash suffixes returned
-   ↓
-Comparison performed locally
-   ↓
-Breach result displayed
-```
-
-The complete password is never sent to the HIBP API.
-
-The complete SHA-1 hash is also not sent.
-
-### Password Generator
-
-Infernified includes a configurable password generator supporting:
-
-* Uppercase letters
-* Lowercase letters
-* Numbers
-* Symbols
-* Custom password length
-
-The generator uses the browser's `crypto.getRandomValues()` API rather than `Math.random()` for security-sensitive random number generation.
-
-Generated passwords are not intentionally stored by the application.
-
-### Accessibility
-
-The interface includes:
-
-* Semantic HTML
-* Keyboard navigation
-* Visible focus states
-* Responsive layouts
-* Reduced-motion support
-
-### Responsive Design
-
-The application uses CSS Grid and responsive CSS to adapt the interface between desktop and mobile layouts.
-
----
-
-# Privacy & Security
-
-Infernified was designed around minimizing the amount of sensitive information leaving the browser.
-
-### Password analysis
-
-The main password analysis runs entirely client-side.
-
-The application does not require a database or backend to calculate:
-
-* Password composition
-* Patterns
-* Approximate entropy
-* Security score
-
-### Breach checking
-
-For the optional breach check, the password is hashed locally using SHA-1.
-
-Only the first five characters of that hash are sent to the Have I Been Pwned range API.
-
-The API returns possible matching hash suffixes, which are then compared locally in the browser.
-
-This means the application does not send the complete password or complete password hash to HIBP.
-
-### SHA-1 clarification
-
-SHA-1 is not considered a suitable modern algorithm for password storage or other applications requiring strong collision resistance.
-
-It is used here specifically because the Have I Been Pwned Pwned Passwords API uses SHA-1 hashes for its k-anonymity range lookup.
-
-Infernified does **not** use SHA-1 as a password-storage mechanism.
-
-### Failure handling
-
-If the breach-check request fails or the API is unavailable, the application reports that the breach check is unavailable rather than treating the password as safe.
-
----
-
-# How It Works
+## How It Works
 
 The application consists entirely of client-side code.
 
@@ -185,32 +87,82 @@ Final security report
 
 The majority of the application works completely offline. An internet connection is only required for the optional breach exposure check.
 
----
+### Breach check detail
 
-# Tech Stack
+```text
+Password
+   ↓
+SHA-1 hash generated locally
+   ↓
+First 5 characters of hash extracted
+   ↓
+5-character prefix sent to HIBP
+   ↓
+Matching hash suffixes returned
+   ↓
+Comparison performed locally
+   ↓
+Breach result displayed
+```
 
-![HTML](https://skillicons.dev/icons?i=html) ![CSS](https://skillicons.dev/icons?i=css) ![JavaScript](https://skillicons.dev/icons?i=js)
+The complete password is never sent to the HIBP API, and neither is the complete SHA-1 hash.
 
-* **HTML5**: page structure and semantic markup.
-* **CSS3**: responsive layout, CSS Grid, custom properties, animations, and styling.
-* **Vanilla JavaScript (ES2017+)**: application logic and DOM interaction. No framework was needed because the app is a single static page with no build step, so plain JavaScript keeps everything dependency-free and fast to load.
-* **Web Crypto API**: SHA-1 hashing for the breach check and `crypto.getRandomValues()` for secure random number generation in the password generator, replacing `Math.random()` for security-sensitive randomness.
-* **Fetch API**: asynchronous communication with the HIBP breach-check endpoint.
-* **Have I Been Pwned Pwned Passwords API**: breach exposure lookup. Its k-anonymity model, where only a five-character hash prefix leaves the browser, matches the app's privacy goal.
-* **Inter**: interface typography.
-* **IBM Plex Mono**: monospace technical typography.
+## Privacy & Security
 
-There is:
+Infernified was designed around minimizing the amount of sensitive information leaving the browser.
 
-* No frontend framework
-* No backend
-* No database
-* No build step
-* No external JavaScript framework dependencies
+### Password analysis
 
----
+The main password analysis runs entirely client-side. The application does not require a database or backend to calculate password composition, patterns, approximate entropy, or the security score.
 
-# Project Structure
+### Breach checking
+
+For the optional breach check, the password is hashed locally using SHA-1. Only the first five characters of that hash are sent to the Have I Been Pwned range API. The API returns possible matching hash suffixes, which are then compared locally in the browser. The application does not send the complete password or complete password hash to HIBP.
+
+### SHA-1 clarification
+
+SHA-1 is not considered a suitable modern algorithm for password storage or other applications requiring strong collision resistance. It is used here specifically because the Have I Been Pwned Pwned Passwords API uses SHA-1 hashes for its k-anonymity range lookup. Infernified does **not** use SHA-1 as a password-storage mechanism.
+
+### Failure handling
+
+If the breach-check request fails or the API is unavailable, the application reports that the breach check is unavailable rather than treating the password as safe.
+
+## Quick Start
+
+### Prerequisites
+
+* A modern web browser. Infernified is a static HTML/CSS/JS site with no build step and no dependencies.
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/p3xz/infernified.git
+cd infernified
+```
+
+2. Run locally. Open `index.html` directly in a browser, or start a local development server:
+
+```bash
+npx serve .
+```
+
+or:
+
+```bash
+python3 -m http.server 8080
+```
+
+3. Open the application at the local URL provided by your development server.
+
+The local password analysis works without an internet connection. The breach exposure feature requires internet access to communicate with the Have I Been Pwned API.
+
+## Usage
+
+Open the running app and enter a password in the analyzer to get an instant breakdown: composition, pattern detection, approximate entropy, and a 0-100 security score. Use the optional breach check to compare against the HIBP database, or switch to the generator to create a password with your chosen length and character sets.
+
+## Project Structure
 
 ```text
 infernified/
@@ -248,46 +200,7 @@ Contains the application logic, including:
 * DOM updates
 * Event handling
 
----
-
-# Getting Started
-
-No build tools are required.
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/p3xz/infernified.git
-cd infernified
-```
-
-### 2. Run locally
-
-You can open `index.html` directly in a browser.
-
-Alternatively, use a local development server:
-
-```bash
-npx serve .
-```
-
-or:
-
-```bash
-python3 -m http.server 8080
-```
-
-### 3. Open the application
-
-Open the local URL provided by your development server.
-
-The local password analysis works without an internet connection.
-
-The breach exposure feature requires internet access to communicate with the Have I Been Pwned API.
-
----
-
-# Limitations
+## Limitations
 
 Infernified is an educational project and its results have limitations.
 
@@ -298,9 +211,7 @@ Infernified is an educational project and its results have limitations.
 * SHA-1 is used because it is the hash format required by the HIBP Pwned Passwords API, not as a recommendation for password storage.
 * The application is not intended to replace professional security auditing or password-management software.
 
----
-
-# Roadmap
+## Roadmap
 
 * [ ] Add automated tests for scoring and pattern detection
 * [ ] Expand the common-password dataset
@@ -309,9 +220,7 @@ Infernified is an educational project and its results have limitations.
 * [ ] Add a downloadable analysis report
 * [ ] Add a theme toggle while maintaining the existing visual design
 
----
-
-# Security Disclaimer
+## Security Disclaimer
 
 Infernified provides an **educational estimate** of password strength and known breach exposure.
 
@@ -319,9 +228,7 @@ A strong score or a negative breach result does not guarantee that a password is
 
 The application should not be treated as a professional cybersecurity audit, authentication system, or legal/security advice.
 
----
-
-# Credits
+## Credits
 
 ### Main Author
 
@@ -340,8 +247,10 @@ Instagram: [@nam7sh](https://instagram.com/nam7sh)
 | Lubna Nawaz   | Co-author / Contributor      | [@Lubnanawaz](https://github.com/Lubnanawaz)           |
 | Rushda Khan   | Co-author / Contributor      | [@rushdakhan-byte](https://github.com/rushdakhan-byte) |
 
----
+## Contributing
+
+Contributions are welcome. Fork the repository, make your change, and open a pull request against `main`.
 
 ## License
 
-Add your preferred open-source license here if you intend to distribute the project under one.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
