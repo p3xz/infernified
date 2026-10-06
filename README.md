@@ -8,6 +8,14 @@ It evaluates password length, character composition, common patterns, approximat
 
 The optional breach check uses the **Have I Been Pwned Pwned Passwords API** with its k-anonymity range lookup. The password is hashed locally, and only a five-character prefix of the SHA-1 hash is sent to the API. The returned hash suffixes are compared locally in the browser.
 
+## Why
+
+Most online password checkers ask you to send your password to a server for analysis. Infernified was built to do the opposite: analyze the password entirely in the browser, so the password itself never leaves your device. It is a personal project built to learn practical browser cryptography and privacy-focused design.
+
+## When
+
+September 2026.
+
 ---
 
 ## Features
@@ -181,14 +189,14 @@ The majority of the application works completely offline. An internet connection
 
 # Tech Stack
 
-* **HTML5** — page structure and semantic markup
-* **CSS3** — responsive layout, CSS Grid, custom properties, animations, and styling
-* **Vanilla JavaScript (ES2017+)** — application logic and DOM interaction
-* **Web Crypto API** — cryptographic hashing and secure random number generation
-* **Fetch API** — communication with the HIBP breach-check endpoint
-* **Have I Been Pwned Pwned Passwords API** — breach exposure lookup
-* **Inter** — interface typography
-* **IBM Plex Mono** — monospace/technical typography
+* **HTML5**: page structure and semantic markup.
+* **CSS3**: responsive layout, CSS Grid, custom properties, animations, and styling.
+* **Vanilla JavaScript (ES2017+)**: application logic and DOM interaction. No framework was needed because the app is a single static page with no build step, so plain JavaScript keeps everything dependency-free and fast to load.
+* **Web Crypto API**: SHA-1 hashing for the breach check and `crypto.getRandomValues()` for secure random number generation in the password generator, replacing `Math.random()` for security-sensitive randomness.
+* **Fetch API**: asynchronous communication with the HIBP breach-check endpoint.
+* **Have I Been Pwned Pwned Passwords API**: breach exposure lookup. Its k-anonymity model, where only a five-character hash prefix leaves the browser, matches the app's privacy goal.
+* **Inter**: interface typography.
+* **IBM Plex Mono**: monospace technical typography.
 
 There is:
 
@@ -315,7 +323,7 @@ The application should not be treated as a professional cybersecurity audit, aut
 
 ### Main Author
 
-**Namish Yadav** — Main Author / Lead Developer
+**Namish Yadav**: Main Author / Lead Developer
 
 GitHub: [@p3xz](https://github.com/p3xz)
 
