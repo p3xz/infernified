@@ -189,6 +189,8 @@ The majority of the application works completely offline. An internet connection
 
 # Tech Stack
 
+![HTML](https://skillicons.dev/icons?i=html) ![CSS](https://skillicons.dev/icons?i=css) ![JavaScript](https://skillicons.dev/icons?i=js)
+
 * **HTML5**: page structure and semantic markup.
 * **CSS3**: responsive layout, CSS Grid, custom properties, animations, and styling.
 * **Vanilla JavaScript (ES2017+)**: application logic and DOM interaction. No framework was needed because the app is a single static page with no build step, so plain JavaScript keeps everything dependency-free and fast to load.
